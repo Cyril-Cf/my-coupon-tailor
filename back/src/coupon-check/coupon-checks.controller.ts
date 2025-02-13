@@ -14,7 +14,8 @@ export class CouponChecksController {
 
   @Post()
   async checkCoupon(@Body() checkCouponDto: CheckCouponDto) {
-    const COUPON = await this.couponChecksService.checkCoupon(checkCouponDto);
+    const COUPON =
+      await this.couponChecksService.verifyCouponWithRuleId(checkCouponDto);
     if (!COUPON) {
       throw new BadRequestException('La vérification est impossible.');
     }

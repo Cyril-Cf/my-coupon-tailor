@@ -21,9 +21,10 @@ export class CouponRulesService {
     return await this.couponRuleRepository.find();
   }
 
-  async findOne(id: UUID): Promise<CouponRule | null> {
+  async findOneWithDependencies(id: UUID): Promise<CouponRule | null> {
     return await this.couponRuleRepository.findOne({
       where: { id },
+      relations: ['dependencies'],
     });
   }
 }

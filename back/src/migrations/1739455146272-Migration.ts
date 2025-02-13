@@ -41,16 +41,25 @@ export class InsertCouponRules1739455146272 implements MigrationInterface {
       )
     )[0].id;
 
-    await queryRunner.query(`
+    const fechopairResult = await queryRunner.query(`
       INSERT INTO "coupon-rules" ("id", "name", "type", "parameters", "created_at", "modified_at") 
       VALUES (
         uuid_generate_v4(), 
         'FECHOPAIR', 
         'FECHOPAIR', 
-        '{"dependencies": ["${fechoId}", "${paipairId}"]}', 
+        '{}', 
         now(), 
         now()
-      )
+      ) 
+      RETURNING "id"
+    `);
+    const fechopairId = fechopairResult[0].id;
+
+    await queryRunner.query(`
+      INSERT INTO "coupon_rule_dependencies" ("rule_id", "dependency_id")
+      VALUES 
+      ('${fechopairId}', '${fechoId}'),
+      ('${fechopairId}', '${paipairId}')
     `);
   }
 

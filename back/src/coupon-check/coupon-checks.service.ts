@@ -17,46 +17,52 @@ export class CouponChecksService {
     private readonly couponRuleService: CouponRulesService,
   ) {}
 
-  async checkCoupon(checkCouponDto: CheckCouponDto) {
+  async verifyCouponWithRuleId(
+    checkCouponDto: CheckCouponDto,
+  ): Promise<CouponCheck | null> {
     const RULE = await this.get_rule_from_check(checkCouponDto);
     if (!RULE) {
       throw new NotFoundException('Rule not found');
     }
+    const is_valid = await this.checkCoupon(RULE);
+    return this.save_check_to_db(RULE, is_valid);
+  }
 
-    if (RULE.dependencies && RULE.dependencies.length > 0) {
-      for (const dependency of RULE.dependencies) {
-        const isDependencyValid = await this.checkCoupon({
-          rule_id: dependency.id,
-        });
+  async checkCoupon(rule: CouponRule): Promise<boolean> {
+    if (rule.dependencies && rule.dependencies.length > 0) {
+      for (const dependency of rule.dependencies) {
+        const isDependencyValid = await this.checkCoupon(dependency);
         if (!isDependencyValid) {
-          return await this.save_check_to_db(RULE, false);
+          return false;
         }
       }
     }
 
     let is_valid = false;
-    switch (RULE.type) {
+    switch (rule.type) {
       case CouponType.FECHO:
-        is_valid = await this.check_rule_fecho(RULE);
+        is_valid = await this.check_rule_fecho(rule);
         break;
       case CouponType.FECHOPAIR:
-        is_valid = await this.check_rule_fechopair(RULE);
+        is_valid = await this.check_rule_fechopair(rule);
         break;
       case CouponType.PAIPAR:
-        is_valid = await this.check_rule_paipair(RULE);
+        is_valid = await this.check_rule_paipair(rule);
         break;
       default:
         throw new NotFoundException('Rule not found');
     }
 
-    return await this.save_check_to_db(RULE, is_valid);
+    return is_valid;
   }
 
   async get_rule_from_check(
     checkCouponDto: CheckCouponDto,
   ): Promise<CouponRule | null> {
     // Later, maybe we can extract a more secured ID, from a JWT for example
-    return this.couponRuleService.findOne(checkCouponDto.rule_id);
+    return this.couponRuleService.findOneWithDependencies(
+      checkCouponDto.rule_id,
+    );
   }
 
   async get_weather_broadcast(
@@ -109,7 +115,10 @@ export class CouponChecksService {
     }
   }
 
-  async save_check_to_db(rule: CouponRule, is_valid: boolean) {
+  async save_check_to_db(
+    rule: CouponRule,
+    is_valid: boolean,
+  ): Promise<CouponCheck> {
     const newCheck = this.couponCheckRepository.create({
       created_at: new Date(),
       is_valid,

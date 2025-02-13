@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coupon System</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="explanations">
+      <h1>Explanations</h1>
+
+      <p>Simply follow the steps :</p>
+      <ol>
+        <li>Sign in or log in to get admin rights</li>
+        <li>Fetch the rules list</li>
+        <li>
+          Try to check if any rule is valid by providing its ID (this mimicks
+          the action that a coupon would have on the system)
+        </li>
+      </ol>
+    </div>
+    <div class="container">
+      <h1>Coupon System</h1>
+
+      <div id="auth">
+        <div id="auth-section-register">
+          <h2>Sign In</h2>
+          <input type="email" id="email" placeholder="Email" />
+          <input type="password" id="password" placeholder="Password" />
+          <button id="signin-btn">Sign In</button>
+          <p id="auth-message-register"></p>
+        </div>
+        <div id="auth-section-login">
+          <h2>Log In</h2>
+          <input type="email" id="emailSignIn" placeholder="Email" />
+          <input type="password" id="passwordSignIn" placeholder="Password" />
+          <button id="login-btn">Log In</button>
+          <p id="auth-message-login"></p>
+        </div>
+      </div>
+
+      <div id="admin-section" class="hidden">
+        <h2>Admin - Coupon Rules</h2>
+        <button id="fetch-rules-btn">Fetch Rules</button>
+        <ul id="rules-list"></ul>
+      </div>
+
+      <div id="public-section" class="hidden">
+        <h2>Check Coupon</h2>
+        <input type="text" id="coupon-id" placeholder="Enter Rule ID" />
+        <button id="check-coupon-btn">Check</button>
+        <p id="coupon-message"></p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

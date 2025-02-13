@@ -1,0 +1,36 @@
+[
+  {
+    "id": "1738251688977-843544330.jpg",
+    "originalName": "Pepe_the_King_Prawn_(Muppet).jpg",
+    "size": 107350,
+    "mimetype": "image/jpeg",
+    "path": "uploads\\1738251688977-843544330.jpg",
+    "pathOriginal": "uploads\\original\\1738251688977-843544330.jpg",
+    "user": {
+      "id": 2,
+      "email": "thomas.arrault@email.org",
+      "password": "$2b$10$RhgKE2muZ6PHObJONLcQAOrCowaO.OJHtgLYlxOVV5shDZQXpQq/C",
+      "firstName": "Thomas",
+      "lastName": "Arrault",
+      "role": "user"
+    },
+    "view": 0
+  },
+  {
+    "id": "1738577368142-931524049.jpg",
+    "originalName": "test.jpg",
+    "size": 9087451,
+    "mimetype": "image/jpeg",
+    "path": "uploads\\1738577368142-931524049.jpg",
+    "pathOriginal": "uploads\\original\\1738577368142-931524049.jpg",
+    "user": {
+      "id": 1,
+      "email": "test@test.fr",
+      "password": "$2b$10$0yqm2faz8WvU5tlFynvGzeEwC/3/rLCzCZKhuG9CJjiwgZXwhCyUK",
+      "firstName": "Cyril",
+      "lastName": "Couffe",
+      "role": "user"
+    },
+    "view": 0
+  }
+]
